@@ -26,6 +26,7 @@ Keen.ready(function(){
       }
     })
     .then(function(res) {
+        debugger;
       pageviews_timeline
         .data(res)
         .sortGroups('desc')
