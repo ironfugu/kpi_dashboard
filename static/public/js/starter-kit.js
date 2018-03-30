@@ -9,7 +9,7 @@ Keen.ready(function(){
 
   var pageviews_timeline = new Keen.Dataviz()
     .el('#chart-01')
-    .type('area')
+    .type('bar')
     .height(280)
     .stacked(true)
     .title('Pageviews by browser')

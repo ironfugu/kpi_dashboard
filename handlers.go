@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"time"
+
 	"github.com/golang/glog"
 )
 
@@ -588,12 +590,19 @@ func timeMonthlyHandler(af apiCmd) (*Response, error) {
     }
   ]
 }`
-	var r ChartResult
-	err := json.Unmarshal([]byte(resultStr), &r)
+	var results ChartResult
+	err := json.Unmarshal([]byte(resultStr), &results)
 	if err != nil {
 		err := fmt.Errorf("could not marshal resultStr: %+v", err)
 		glog.Error(err)
 		return &Response{Error: &ErrorResp{Reason: err.Error()}}, nil
 	}
-	return &Response{Result: r}, nil
+
+	for i := range results.Result {
+		m := (i % 12) + 1
+		d := time.Date(2017, time.Month(m), 1, 0, 0, 0, 0, time.UTC)
+		results.Result[i].Timeframe.Start = d.Format(time.RFC3339)
+		results.Result[i].Timeframe.Start = d.Format(time.RFC3339)
+	}
+	return &Response{Result: results}, nil
 }
