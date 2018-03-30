@@ -47,11 +47,13 @@ type ErrorResp struct {
 }
 
 type ChartResult struct {
-	Result []struct{
-		Value []map[string]interface{} `json:"value"`
-		Timeframe struct{
-			Start string `json:"start"`
-			End string `json:"end"`
-		} `json:"timeframe"`
-	} `json:"result"`
+	Result []ChartResultItem `json:"result"`
+}
+
+type ChartResultItem struct {
+	Value     []map[string]interface{} `json:"value"`
+	Timeframe struct {
+		Start string `json:"start"`
+		End   string `json:"end"`
+	} `json:"timeframe"`
 }

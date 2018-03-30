@@ -12,7 +12,7 @@ Keen.ready(function(){
     .type('bar')
     .height(280)
     .stacked(true)
-    .title('Pageviews by browser')
+    .title('Contribution by role')
     .prepare();
 
   $.ajax({
