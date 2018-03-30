@@ -1,11 +1,18 @@
 package kpi_dashboard
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
+	"html/template"
 	"net"
+	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/golang/glog"
 )
 
 // ParseBind
@@ -108,4 +115,61 @@ func GetContext() *Context {
 
 	context := &Context{config: config}
 	return context
+}
+
+func prepareContent(context *Context) error {
+	dir, err := os.Getwd()
+	if err != nil {
+		return fmt.Errorf("unable to get current working directory: %+v", err)
+	}
+	glog.Infof("working directory %+v", dir)
+	context.contentPath = "./static/content"
+	fi, err := os.Stat(context.contentPath)
+	if err != nil {
+		return fmt.Errorf("contentPath %s does not exist: %+v", context.contentPath, err)
+
+	}
+	if !fi.IsDir() {
+		return fmt.Errorf("%+v is not a directory", fi.Name())
+
+	}
+	glog.V(4).Infof("walking root application dir for html files")
+	filepath.Walk(context.contentPath, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return fmt.Errorf("error trying to get static html files by walking context.contentPath: %v. err: %v", path, err)
+
+		}
+		if !f.IsDir() && filepath.Ext(path) == ".html" {
+			context.htmlPages = append(context.htmlPages, path)
+
+		}
+		return nil
+
+	})
+	glog.V(4).Infof("template parse html files %v", context.htmlPages)
+	context.pageTemplate = template.Must(template.New("").Funcs(template.FuncMap{
+		"noescape": func(value interface{}) template.HTML {
+			return template.HTML(fmt.Sprint(value))
+
+		},
+		"CallTemplate": func(name string, data interface{}) (ret template.HTML, err error) {
+			buf := bytes.NewBuffer([]byte{})
+			err = context.pageTemplate.ExecuteTemplate(buf, name, data)
+			ret = template.HTML(buf.String())
+			return
+
+		},
+	}).ParseFiles(context.htmlPages...))
+
+	return nil
+
+}
+
+func renderPage(context *Context, w http.ResponseWriter, r *http.Request, templateName string) {
+	err := context.pageTemplate.ExecuteTemplate(w, templateName, nil)
+	if err != nil {
+		glog.Errorf("template error %v", err)
+		errmsg := fmt.Errorf("template %s error: %v", templateName, err)
+		http.Error(w, errmsg.Error(), http.StatusInternalServerError)
+	}
 }

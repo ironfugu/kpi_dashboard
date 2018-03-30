@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -ex
-cd $GOPATH/src/bitbucket.org/maxim_yefremov/kpi_dashboard/apps/kpi_dashboard
+REPO=$GOPATH/src/bitbucket.org/maxim_yefremov/kpi_dashboard
+cd $REPO/apps/kpi_dashboard
 go install
+cd $REPO
 kpi_dashboard -alsologtostderr
