@@ -46,3 +46,12 @@ type ErrorResp struct {
 	Code   string `json:"code"`
 }
 
+type ChartResult struct {
+	Result []struct{
+		Value []map[string]interface{} `json:"value"`
+		Timeframe struct{
+			Start string `json:"start"`
+			End string `json:"end"`
+		} `json:"timeframe"`
+	} `json:"result"`
+}

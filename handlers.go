@@ -8,7 +8,7 @@ import (
 )
 
 func timeMonthlyHandler(af apiCmd) (*Response, error) {
-	result := `{
+	resultStr := `{
   "result": [
     {
       "value": [
@@ -588,10 +588,10 @@ func timeMonthlyHandler(af apiCmd) (*Response, error) {
     }
   ]
 }`
-	var r interface{}
-	err := json.Unmarshal([]byte(result), &r)
+	var r ChartResult
+	err := json.Unmarshal([]byte(resultStr), &r)
 	if err != nil {
-		err := fmt.Errorf("could not marshal result: %+v", err)
+		err := fmt.Errorf("could not marshal resultStr: %+v", err)
 		glog.Error(err)
 		return &Response{Error: &ErrorResp{Reason: err.Error()}}, nil
 	}
