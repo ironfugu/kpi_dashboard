@@ -15,25 +15,27 @@ Keen.ready(function(){
     .title('Pageviews by browser')
     .prepare();
 
-  client
-    .query('count', {
-      event_collection: 'pageviews',
-      interval: 'hourly',
-      group_by: 'user.device_info.browser.family',
-      timeframe: {
-        start: '2014-05-04T00:00:00.000Z',
-        end: '2014-05-05T00:00:00.000Z'
-      }
-    })
-    .then(function(res) {
-        debugger;
-      pageviews_timeline
-        .data(res)
-        .sortGroups('desc')
-        .render();
-    })
-    .catch(function(err) {
-      pageviews_timeline.message(err.message)
+  $.ajax({
+        type: "POST",
+        url: "/api/v1/time-monthly",
+        data: JSON.stringify({Directive: "list"}),
+        success: function(data) {
+            if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
+                pageviews_timeline.message("Could not request time monthly data");
+                console.error(data);
+                return;
+            }
+            console.info("data", data);
+            pageviews_timeline
+                .data(data)
+                .sortGroups('desc')
+                .render();
+        },
+        dataType: "json",
+        error: function(e) {
+            console.error(e);
+            pageviews_timeline.message("Could not request time monthly data");
+        }
     });
 
 
