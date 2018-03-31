@@ -40,31 +40,34 @@ Keen.ready(function(){
 
 
   // Pageviews by browser (pie)
-
   var pageviews_pie = new Keen.Dataviz()
     .el('#chart-02')
     .type('pie')
     .height(280)
-    .title('Pageviews by browser')
+    .title('Expenses')
     .prepare();
 
-  client
-    .query('count', {
-      event_collection: 'pageviews',
-      group_by: 'user.device_info.browser.family',
-      timeframe: {
-        start: '2014-05-01T00:00:00.000Z',
-        end: '2014-05-05T00:00:00.000Z'
+    $.ajax({
+      type: "POST",
+      url: "/api/v1/expenses",
+      data: JSON.stringify({Directive: "list"}),
+      success: function(data) {
+          if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
+              pageviews_pie.message("Could not request expenses data");
+              console.error(data);
+              return;
+          }
+          console.info("data", data);
+          pageviews_pie
+            .data(data)
+            .sortGroups('desc')
+            .render();
+      },
+      dataType: "json",
+      error: function(e) {
+          console.error(e);
+          pageviews_pie.message("Could not request expenses data");
       }
-    })
-    .then(function(res) {
-      pageviews_pie
-        .data(res)
-        .sortGroups('desc')
-        .render();
-    })
-    .catch(function(err) {
-      pageviews_pie.message(err.message)
     });
 
 

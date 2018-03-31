@@ -7,7 +7,7 @@ import (
 )
 
 func timeMonthlyHandler(af apiCmd) (*Response, error) {
-	var results ChartResult
+	var results ChartTimeResult
 	roles := []string{"QA Engineers", "Backend Engineers", "Frontend Engineers", "Machine learning Engineers"}
 	for i := 0; i <= 100; i++ {
 		var values []map[string]interface{}
@@ -17,7 +17,7 @@ func timeMonthlyHandler(af apiCmd) (*Response, error) {
 			value["result"] = rand.Intn(100)
 			values = append(values, value)
 		}
-		results.Result = append(results.Result, ChartResultItem{Value: values})
+		results.Result = append(results.Result, ChartTimeResultItem{Value: values})
 	}
 
 	for i := range results.Result {
@@ -26,5 +26,17 @@ func timeMonthlyHandler(af apiCmd) (*Response, error) {
 		results.Result[i].Timeframe.Start = d.Format(time.RFC3339)
 		results.Result[i].Timeframe.Start = d.Format(time.RFC3339)
 	}
+	return &Response{Result: results}, nil
+}
+
+func expensesHandler(af apiCmd) (*Response, error) {
+	var results ChartNoTimeResult
+	for _, kind := range []string{"Electricity", "Salary", "Other"} {
+		value := map[string]interface{}{}
+		value["kind"] = kind
+		value["result"] = rand.Intn(10000)
+		results.Result = append(results.Result, value)
+	}
+
 	return &Response{Result: results}, nil
 }
