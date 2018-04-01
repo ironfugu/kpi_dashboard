@@ -109,61 +109,32 @@ Keen.ready(function(){
 
   var impressions_by_device = new Keen.Dataviz()
     .el('#chart-04')
-    .type('bar')
+    .type('area')
     .height(280)
-    .stacked(true)
-    .title('Impressions by device')
+    .stacked(false)
+    .title('Profit')
     .prepare();
 
-  client
-    .query('count', {
-      event_collection: 'impressions',
-      group_by: 'user.device_info.device.family',
-      interval: 'hourly',
-      timeframe: {
-        start: '2014-05-04T00:00:00.000Z',
-        end: '2014-05-05T00:00:00.000Z'
-      }
-    })
-    .then(function(res) {
-      impressions_by_device
-        .data(res)
-        .sortGroups('desc')
-        .render();
-    })
-    .catch(function(err) {
-      impressions_by_device.message(err.message)
-    });
-
-
-  // Impressions by country
-
-  var impressions_by_country = new Keen.Dataviz()
-    .el('#chart-05')
-    .type('bar')
-    .height(280)
-    .stacked(true)
-    .title('Impressions by country')
-    .prepare();
-
-  client
-    .query('count', {
-      event_collection: 'impressions',
-      group_by: 'user.geo_info.country',
-      interval: 'hourly',
-      timeframe: {
-        start: '2014-05-04T00:00:00.000Z',
-        end: '2014-05-05T00:00:00.000Z'
-      }
-    })
-    .then(function(res) {
-      impressions_by_country
-        .data(res)
-        .sortGroups('desc')
-        .render();
-    })
-    .catch(function(err) {
-      impressions_by_country.message(err.message)
-    });
-
+  $.ajax({
+    type: "POST",
+    url: "/api/v1/profit",
+    data: JSON.stringify({Directive: "list"}),
+    success: function(data) {
+        if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
+            pageviews_pie.message("Could not request expenses data");
+            console.error(data);
+            return;
+        }
+        console.info("data", data);
+        impressions_by_device
+            .data(data)
+            .sortGroups('desc')
+            .render();
+    },
+    dataType: "json",
+    error: function(e) {
+        console.error(e);
+        pageviews_pie.message("Could not request expenses data");
+    }
+  });
 });
