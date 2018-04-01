@@ -2,6 +2,7 @@ package kpi_dashboard
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
@@ -14,7 +15,15 @@ var apiFuncs map[string]*apiFunc
 
 func Start(context *Context) {
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		renderPage(context, w, r, ROOT_TEMPLATE_NAME)
+		template := r.URL.Path[1:]
+		if len(template) == 0 {
+			template = ROOT_TEMPLATE_NAME
+		}
+		if context.pageTemplate.Lookup(template) == nil {
+			http.Error(w, fmt.Sprintf("Page %+v is not found", template), http.StatusNotFound)
+			return
+		}
+		renderPage(context, w, r, template)
 	}
 	initCmds(context)
 	http.HandleFunc("/api/v1/", func(w http.ResponseWriter, r *http.Request) {
