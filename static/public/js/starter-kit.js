@@ -78,27 +78,31 @@ Keen.ready(function(){
     .type('bar')
     .height(280)
     .stacked(true)
-    .title('Impressions by advertiser')
+    .title('Commits')
     .prepare();
 
-  client
-    .query('count', {
-      event_collection: 'impressions',
-      group_by: 'ad.advertiser',
-      interval: 'hourly',
-      timeframe: {
-        start: '2014-05-04T00:00:00.000Z',
-        end: '2014-05-05T00:00:00.000Z'
-      }
-    })
-    .then(function(res) {
-      impressions_timeline
-        .data(res)
-        .sortGroups('desc')
-        .render();
-    })
-    .catch(function(err) {
-      impressions_timeline.message(err.message)
+
+    $.ajax({
+        type: "POST",
+        url: "/api/v1/commits",
+        data: JSON.stringify({Directive: "list"}),
+        success: function(data) {
+            if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
+                pageviews_pie.message("Could not request expenses data");
+                console.error(data);
+                return;
+            }
+            console.info("data", data);
+            impressions_timeline
+                .data(data)
+                .sortGroups('desc')
+                .render();
+        },
+        dataType: "json",
+        error: function(e) {
+            console.error(e);
+            pageviews_pie.message("Could not request expenses data");
+        }
     });
 
   // Impressions by device

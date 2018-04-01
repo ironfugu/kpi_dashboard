@@ -52,10 +52,12 @@ type ChartTimeResult struct {
 
 type ChartTimeResultItem struct {
 	Value     []map[string]interface{} `json:"value"`
-	Timeframe struct {
-		Start string `json:"start"`
-		End   string `json:"end"`
-	} `json:"timeframe"`
+	Timeframe Time                     `json:"timeframe"`
+}
+
+type Time struct {
+	Start string `json:"start"`
+	End   string `json:"end"`
 }
 
 type ChartNoTimeResult struct {

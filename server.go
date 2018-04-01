@@ -52,7 +52,8 @@ func Start(context *Context) {
 		cmd := apiCmd{
 			Context:    apiFunc.Context,
 			RemoteAddr: r.RemoteAddr, Cmd: req, Req: r}
-		resp, err := apiFuncs[ep].Handler(cmd)
+		glog.V(5).Infof("ep %+v", ep)
+		resp, err := apiFunc.Handler(cmd)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -89,5 +90,6 @@ func initCmds(context *Context) {
 	apiFuncs = map[string]*apiFunc{
 		"time-monthly": {Handler: timeMonthlyHandler, Context: context},
 		"expenses":     {Handler: expensesHandler, Context: context},
+		"commits":      {Handler: commitsHandler, Context: context},
 	}
 }
