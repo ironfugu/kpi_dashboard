@@ -165,8 +165,8 @@ func prepareContent(context *Context) error {
 
 }
 
-func renderPage(context *Context, w http.ResponseWriter, r *http.Request, templateName string) {
-	err := context.pageTemplate.ExecuteTemplate(w, templateName, nil)
+func renderPage(context *Context, w http.ResponseWriter, r *http.Request, templateName string, p Page) {
+	err := context.pageTemplate.ExecuteTemplate(w, templateName, p)
 	if err != nil {
 		glog.Errorf("template error %v", err)
 		errmsg := fmt.Errorf("template %s error: %v", templateName, err)

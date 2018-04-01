@@ -23,7 +23,16 @@ func Start(context *Context) {
 			http.Error(w, fmt.Sprintf("Page %+v is not found", template), http.StatusNotFound)
 			return
 		}
-		renderPage(context, w, r, template)
+		page := Page{Menu: []*MenuItem{
+			{Text: "Home", Path: "/"},
+			{Text: "Team", Path: "/team"},
+		}}
+		for _, m := range page.Menu {
+			if m.Path == r.URL.Path {
+				m.Active = true
+			}
+		}
+		renderPage(context, w, r, template, page)
 	}
 	initCmds(context)
 	http.HandleFunc("/api/v1/", func(w http.ResponseWriter, r *http.Request) {

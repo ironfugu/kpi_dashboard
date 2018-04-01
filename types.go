@@ -63,3 +63,12 @@ type Time struct {
 type ChartNoTimeResult struct {
 	Result []map[string]interface{} `json:"result"`
 }
+
+type MenuItem struct {
+	Text, Path string
+	Active     bool
+}
+
+type Page struct {
+	Menu []*MenuItem
+}
