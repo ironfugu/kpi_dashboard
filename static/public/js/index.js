@@ -1,5 +1,4 @@
 Keen.ready(function(){
-
   // Expenses (pie)
   var expenses_pie = new Keen.Dataviz()
     .el('#expenses')

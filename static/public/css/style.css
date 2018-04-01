@@ -1,3 +1,10 @@
 .keen-dashboard{
     padding-top: 80px;
 }
+input[name="daterange"]{
+    width: 200px;
+    text-align: center;
+}
+.date-range-container{
+    text-align: right;
+}
