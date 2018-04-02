@@ -107,7 +107,11 @@ func commitsHandler(af apiCmd) (*Response, error) {
 func profitHandler(af apiCmd) (*Response, error) {
 	var results ChartTimeResult
 	developers := []string{"Client1", "Client2", "Client3"}
-	for i := 0; i < 12; i++ {
+	from, to, err := parseDateParams(af.Cmd.Params)
+	if err != nil {
+		return &Response{Error: &ErrorResp{Reason: err.Error()}}, nil
+	}
+	for i := 0; i < monthsAmount(from, to); i++ {
 		var values []map[string]interface{}
 		for _, name := range developers {
 			value := map[string]interface{}{}
@@ -115,9 +119,7 @@ func profitHandler(af apiCmd) (*Response, error) {
 			value["result"] = rand.Intn(100)
 			values = append(values, value)
 		}
-		m := (i % 12) + 1
-		day := rand.Intn(28)
-		d := time.Date(2017, time.Month(m), day, 0, 0, 0, 0, time.UTC)
+		d := from.Add(time.Hour * 24 * 30 * time.Duration(i))
 		results.Result = append(results.Result, ChartTimeResultItem{
 			Value: values,
 			Timeframe: Time{
