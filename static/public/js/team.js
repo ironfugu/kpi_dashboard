@@ -69,7 +69,7 @@ Keen.ready(function(){
         $.ajax({
             type: "POST",
             url: "/api/v1/commits",
-            data: JSON.stringify({Directive: "list"}),
+            data: JSON.stringify({Directive: "list", Params: [start, end]}),
             success: function(data) {
                 if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
                     commits_timeline.message("Could not request expenses data");
