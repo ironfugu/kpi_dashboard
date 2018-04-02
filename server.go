@@ -110,5 +110,6 @@ func initCmds(context *Context) {
 		"expenses":     {Handler: expensesHandler, Context: context},
 		"commits":      {Handler: commitsHandler, Context: context},
 		"profit":       {Handler: profitHandler, Context: context},
+		"projects":     {Handler: projectsHandler, Context: context},
 	}
 }

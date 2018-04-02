@@ -17,12 +17,14 @@ Keen.ready(function(){
     .stacked(true)
     .title('Commits')
     .prepare();
-
-    function showGraphs(start, end){
+  window.Common.projectsPrepare(function (projId) {
+        showGraphs(window.Common.Start, window.Common.End, projId);
+  });
+  function showGraphs(start, end, projID){
         $.ajax({
           type: "POST",
           url: "/api/v1/contribution",
-          data: JSON.stringify({Directive: "list", Params: [start, end]}),
+          data: JSON.stringify({Directive: "list", Params: [start, end, projID]}),
           success: function(data) {
               if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
                   contribution_by_role.message("Could not request time monthly data");
@@ -44,7 +46,7 @@ Keen.ready(function(){
         $.ajax({
             type: "POST",
             url: "/api/v1/commits",
-            data: JSON.stringify({Directive: "list", Params: [start, end]}),
+            data: JSON.stringify({Directive: "list", Params: [start, end, projID]}),
             success: function(data) {
                 if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
                     commits_timeline.message("Could not request expenses data");
@@ -64,5 +66,5 @@ Keen.ready(function(){
             }
         });
     }
-    showGraphs(window.Common.DEFAULT_START, window.Common.DEFAULT_END);
+    showGraphs(window.Common.Start, window.Common.End);
 });

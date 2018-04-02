@@ -7,6 +7,10 @@ import (
 
 	"fmt"
 
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+
 	"github.com/golang/glog"
 )
 
@@ -128,4 +132,32 @@ func profitHandler(af apiCmd) (*Response, error) {
 			}})
 	}
 	return &Response{Result: results}, nil
+}
+
+func projectsHandler(af apiCmd) (*Response, error) {
+	type project struct {
+		Id    int    `json:"id"`
+		Title string `json:"title"`
+	}
+	prjs, err := func() ([]project, error) {
+		resp, err := http.Get("https://jsonplaceholder.typicode.com/albums")
+		if err != nil {
+			return nil, fmt.Errorf("could not get projects: %+v", err)
+		}
+		defer resp.Body.Close()
+		b, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("could not parse response body: %+v", err)
+		}
+		var prjs []project
+		if err := json.Unmarshal(b, &prjs); err != nil {
+			return nil, fmt.Errorf("could not unmarshal result: %+v: %+v", err, string(b))
+		}
+		return prjs, nil
+	}()
+	if err != nil {
+		glog.Error(err)
+		return &Response{Error: &ErrorResp{Reason: err.Error()}}, nil
+	}
+	return &Response{Result: prjs}, nil
 }

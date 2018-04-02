@@ -18,11 +18,15 @@ Keen.ready(function(){
     .title('Profit')
     .prepare();
 
-  function showGraphs(start, end){
+  window.Common.projectsPrepare(function (projId) {
+      showGraphs(window.Common.Start, window.Common.End, projId);
+  });
+
+  function showGraphs(start, end, projectID){
         $.ajax({
             type: "POST",
             url: "/api/v1/expenses",
-            data: JSON.stringify({Directive: "list", Params:[start, end]}),
+            data: JSON.stringify({Directive: "list", Params:[start, end, projectID]}),
             success: function(data) {
                 if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
                     expenses_pie.message("Could not request expenses data");
@@ -65,5 +69,5 @@ Keen.ready(function(){
           }
       });
     }
-    showGraphs(window.Common.DEFAULT_START, window.Common.DEFAULT_END);
+    showGraphs(window.Common.Start, window.Common.End);
 });
