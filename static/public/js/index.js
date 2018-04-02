@@ -5,7 +5,7 @@ Keen.ready(function(){
   var expenses_pie = new Keen.Dataviz()
     .el('#expenses')
     .type('pie')
-    .height(280)
+    .height(window.Common.Height)
     .title('Expenses')
     .prepare();
 
@@ -13,7 +13,7 @@ Keen.ready(function(){
   var profit = new Keen.Dataviz()
     .el('#profit')
     .type('area')
-    .height(280)
+    .height(window.Common.Height)
     .stacked(false)
     .title('Profit')
     .prepare();

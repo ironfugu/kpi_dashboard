@@ -1,6 +1,7 @@
 window.Common = {
     Start: moment().subtract(1, "years"),
     End: moment(),
+    Height: 350,
     daterange_change: function (callback) {
         $('input[name="daterange"]').daterangepicker(
             {

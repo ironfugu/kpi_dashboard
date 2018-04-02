@@ -4,7 +4,7 @@ Keen.ready(function(){
   var contribution_by_role = new Keen.Dataviz()
     .el('#contribution')
     .type('bar')
-    .height(280)
+    .height(window.Common.Height)
     .stacked(true)
     .title('Contribution by role')
     .prepare();
@@ -13,7 +13,7 @@ Keen.ready(function(){
   var commits_timeline = new Keen.Dataviz()
     .el('#commits')
     .type('bar')
-    .height(280)
+    .height(window.Common.Height)
     .stacked(true)
     .title('Commits')
     .prepare();
