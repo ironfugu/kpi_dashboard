@@ -8,3 +8,6 @@ input[name="daterange"]{
 .date-range-container{
     text-align: right;
 }
+.tile{
+    height: 280px;
+}

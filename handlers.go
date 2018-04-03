@@ -71,7 +71,7 @@ func parseDateParams(params []string) (from, to *time.Time, err error) {
 
 func expensesHandler(af apiCmd) (*Response, error) {
 	var results ChartNoTimeResult
-	for _, kind := range []string{"Electricity", "Salary", "Other"} {
+	for _, kind := range []string{"Electricity", "Salary", "Other", "Coffee", "Computers"} {
 		value := map[string]interface{}{}
 		value["kind"] = kind
 		value["result"] = rand.Intn(10000)
@@ -110,12 +110,13 @@ func commitsHandler(af apiCmd) (*Response, error) {
 
 func profitHandler(af apiCmd) (*Response, error) {
 	var results ChartTimeResult
-	developers := []string{"Client1", "Client2", "Client3"}
+	developers := []string{"Client1", "Client2"}
 	from, to, err := parseDateParams(af.Cmd.Params)
+	_ = to
 	if err != nil {
 		return &Response{Error: &ErrorResp{Reason: err.Error()}}, nil
 	}
-	for i := 0; i < monthsAmount(from, to); i++ {
+	for i := 0; i < 30; i++ {
 		var values []map[string]interface{}
 		for _, name := range developers {
 			value := map[string]interface{}{}
@@ -123,7 +124,7 @@ func profitHandler(af apiCmd) (*Response, error) {
 			value["result"] = rand.Intn(100)
 			values = append(values, value)
 		}
-		d := from.Add(time.Hour * 24 * 30 * time.Duration(i))
+		d := from.Add(time.Hour * 24 * time.Duration(i))
 		results.Result = append(results.Result, ChartTimeResultItem{
 			Value: values,
 			Timeframe: Time{
@@ -160,4 +161,16 @@ func projectsHandler(af apiCmd) (*Response, error) {
 		return &Response{Error: &ErrorResp{Reason: err.Error()}}, nil
 	}
 	return &Response{Result: prjs}, nil
+}
+
+func qualityAndReleasesHandler(af apiCmd) (*Response, error) {
+	table := Table{
+		Name: "Quality and Releases",
+		Data: [][]string{
+			{"Sev 1 open bug", "4"},
+			{"Sev 2 open bug", "5"},
+			{"Number of releases", "2"},
+		},
+	}
+	return &Response{Result: table}, nil
 }

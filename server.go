@@ -25,7 +25,6 @@ func Start(context *Context) {
 		}
 		page := Page{Menu: []*MenuItem{
 			{Text: "Home", Path: "/"},
-			{Text: "Team", Path: "/team"},
 		}}
 		for _, m := range page.Menu {
 			if m.Path == r.URL.Path {
@@ -106,10 +105,11 @@ func sendResp(w http.ResponseWriter, resp *Response) {
 
 func initCmds(context *Context) {
 	apiFuncs = map[string]*apiFunc{
-		"contribution": {Handler: contributionHandler, Context: context},
-		"expenses":     {Handler: expensesHandler, Context: context},
-		"commits":      {Handler: commitsHandler, Context: context},
-		"profit":       {Handler: profitHandler, Context: context},
-		"projects":     {Handler: projectsHandler, Context: context},
+		"contribution":         {Handler: contributionHandler, Context: context},
+		"expenses":             {Handler: expensesHandler, Context: context},
+		"commits":              {Handler: commitsHandler, Context: context},
+		"profit":               {Handler: profitHandler, Context: context},
+		"projects":             {Handler: projectsHandler, Context: context},
+		"quality-and-releases": {Handler: qualityAndReleasesHandler, Context: context},
 	}
 }

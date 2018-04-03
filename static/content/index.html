@@ -1,18 +1,30 @@
 {{define "index"}}
     {{template "header" .}}
-    {{template "projects" .}}
-    {{template "daterange" .}}
     <div class="row">
 
-      <div class="col-sm-4">
-        <div id="expenses"></div>
+      <div class="col-sm-6">
+        <div id="quality-and-releases" class="tile keen-dataviz"></div>
         <br>
       </div>
 
-      <div class="col-sm-8">
-        <div id="profit"></div>
+      <div class="col-sm-6">
+        <div id="pie-chart"></div>
         <br>
       </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div id="bar-chart"></div>
+            <br>
+        </div>
+
+        <div class="col-sm-6">
+            <div id="table" class="tile keen-dataviz"></div>
+            <br>
+        </div>
 
     </div>
     <script type="text/javascript" src="/public/js/index.js"></script>

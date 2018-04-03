@@ -72,3 +72,9 @@ type MenuItem struct {
 type Page struct {
 	Menu []*MenuItem
 }
+
+type Table struct {
+	Name   string
+	Header []string
+	Data   [][]string
+}
