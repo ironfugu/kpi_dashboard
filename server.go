@@ -111,5 +111,6 @@ func initCmds(context *Context) {
 		"profit":               {Handler: profitHandler, Context: context},
 		"projects":             {Handler: projectsHandler, Context: context},
 		"quality-and-releases": {Handler: qualityAndReleasesHandler, Context: context},
+		"other-key":            {Handler: otherKeyHandler, Context: context},
 	}
 }

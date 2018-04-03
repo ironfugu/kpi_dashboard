@@ -63,6 +63,29 @@ Keen.ready(function(){
           }
       });
 
+      function showTable(data, $container) {
+          $container.html("<div class='keen-dataviz-title'>"+data.Name+"</div>");
+          var $table = $("<table class='table'></table>");
+          $container.append($table);
+          function addRow(row, isHeader) {
+              var $tr = $("<tr></tr>");
+              $table.append($tr);
+              row.forEach(function (elem) {
+                  var td="<td>"+elem+"</td>";
+                  if (isHeader) {
+                      td="<th>"+elem+"</th>";
+                  }
+                  $tr.append(td);
+              });
+          }
+          if (data.hasOwnProperty("Header") && data.Header) {
+              addRow(data.Header, true);
+          }
+          data.Data.forEach(function (row) {
+              addRow(row, false);
+          });
+      }
+
       var $qualityAndReleases = $("#quality-and-releases");
       $.ajax({
           type: "POST",
@@ -75,16 +98,28 @@ Keen.ready(function(){
                   return;
               }
               console.info("data", JSON.stringify(data));
-              $qualityAndReleases.html("<div class='keen-dataviz-title'>"+data.Name+"</div>");
-              var $table = $("<table class='table'></table>");
-              $qualityAndReleases.append($table);
-              data.Data.forEach(function (row) {
-                  var $tr = $("<tr></tr>");
-                  $table.append($tr);
-                  row.forEach(function (elem) {
-                    $tr.append("<td>"+elem+"</td>");
-                  });
-              });
+              showTable(data, $qualityAndReleases);
+          },
+          dataType: "json",
+          error: function(e) {
+              console.error(e);
+              expenses_pie.message("Could not request expenses data");
+          }
+      });
+
+      var $otherKey = $("#other-key");
+      $.ajax({
+          type: "POST",
+          url: "/api/v1/other-key",
+          data: JSON.stringify({Directive: "list", Params:[start, end]}),
+          success: function(data) {
+              if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
+                  $otherKey.text("Could not request quality and releases data");
+                  console.error(data);
+                  return;
+              }
+              console.info("data", JSON.stringify(data));
+              showTable(data, $otherKey);
           },
           dataType: "json",
           error: function(e) {

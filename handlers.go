@@ -174,3 +174,15 @@ func qualityAndReleasesHandler(af apiCmd) (*Response, error) {
 	}
 	return &Response{Result: table}, nil
 }
+
+func otherKeyHandler(af apiCmd) (*Response, error) {
+	table := Table{
+		Name:   "Other key",
+		Header: []string{"Key", "Value", "Change from yesterday"},
+		Data: [][]string{
+			{"Number of bug", "25", "-2"},
+			{"Number of customers", "4", "+1"},
+		},
+	}
+	return &Response{Result: table}, nil
+}
