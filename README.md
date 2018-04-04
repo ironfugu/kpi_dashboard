@@ -90,7 +90,7 @@ If we look in file `static/public/js/index.js` we see the following:
 ### When keen is ready:
  ```
 Keen.ready(function(){
-    // do all job here
+    /*do all job here*/
  });
 
 ```
