@@ -88,14 +88,14 @@ This is why `showTable` function rendered this data as a table with header line.
 Pie is rendered using [keen](https://github.com/keen/dashboards) library.
 If we look in file `static/public/js/index.js` we see the following:
 ### When keen is ready:
- ```
+```js
 Keen.ready(function(){
-
+    
  });
 
 ```
 ### Prepare the place for pie
-```
+```js
   // Expenses (pie)
   var expenses_pie = new Keen.Dataviz()
     .el('#pie-chart') // the chart will be rendered inside element with id '#pie-chart'
@@ -104,7 +104,7 @@ Keen.ready(function(){
     .title('Expenses') // title of the chart
     .prepare(); 
 ```
-No you can see spinner inside the html element #pie-chart.
+Now you can see spinner inside the html element #pie-chart.
 ### Requesting the data 
 it's just ajax request to the backend server:
 ```js
@@ -163,7 +163,8 @@ expenses_pie.message("Could not request expenses data");
 ```
 ## Bar chart
 Bar chart is rendered in similar way. Just a few differences:
-1. Prepare the chart of type `bar` inside div with id `bar-chart`
+### Prepare the chart of type `bar` 
+inside div with id `bar-chart`
 ```js
 var profit = new Keen.Dataviz()
     .el('#bar-chart')
@@ -175,7 +176,7 @@ var profit = new Keen.Dataviz()
 ```
 
 
-1. Requesting the backend:
+### Requesting the backend
 ```js
 $.ajax({
           type: "POST",
@@ -313,7 +314,7 @@ Javascript is just rendering charts and tables to elements with specified ids, l
 
 # Backend
 Golang is used to serve the frontend. I have simple `run.sh` file for rebuilding and launching the backend server:
-```go
+```
 ./run.sh
 ```
 ```
