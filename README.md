@@ -162,6 +162,7 @@ And if we have error response we can render error message inside our chart:
 expenses_pie.message("Could not request expenses data");
 ```
 ## Bar chart
+![Bar chart](readme_images/bar.png)
 Bar chart is rendered in similar way. Just a few differences:
 ### Prepare the chart of type `bar` 
 inside div with id `bar-chart`
