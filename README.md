@@ -3,17 +3,16 @@ The app which shows different Key Performance Indicator data on one screen.
 ![KPI](readme_images/whole.png)
 
 # Frontend
-Here I describe how to manage fornt end content. Let's start with table view:
+Here I describe how to manage front end content. Let's start with table view:
 ##Table without header
 
 ![Table without header](readme_images/table.png)
 
-The data for is requested from backend `/api/v1/quality-and-releases` in `static/public/js/index.js` file: 
+The data for it is requested from backend `/api/v1/quality-and-releases` in `static/public/js/index.js` file: 
 ```js
 $.ajax({
-          type: "POST",
+          type: "GET",
           url: "/api/v1/quality-and-releases",
-          data: JSON.stringify({Directive: "list", Params:[start, end]}),
           success: function(data) {
               showTable(data, $qualityAndReleases);
           },
@@ -50,7 +49,7 @@ var $qualityAndReleases = $("#quality-and-releases");
 In similar way we render table with header:
 ![Table with header](readme_images/table_with_header.png)
 
-We are requesting backend `/api/v1/other-key` in this case and response looks like this:
+We are requesting backend `/api/v1/other-key` and the response looks like this:
 ```json
 {
   "Name": "Other key",
@@ -87,16 +86,16 @@ This is why `showTable` function rendered this data as a table with header line.
 ![Pie chart](readme_images/pie.png)
 
 Pie is rendered using [keen](https://github.com/keen/dashboards) library.
-What we need to do for it. I am just describing what is written in file `static/public/js/index.js`:
+If we look in file `static/public/js/index.js` we see the following:
 1. When keen is ready:
- ```js
+ ```
  Keen.ready(function(){
     // do all job here
  });
 
 ```
 2. Prepare the place for pie:
-```js
+```
   // Expenses (pie)
   var expenses_pie = new Keen.Dataviz()
     .el('#pie-chart') // the chart will be rendered inside element with id '#pie-chart'

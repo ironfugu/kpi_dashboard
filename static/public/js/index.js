@@ -87,9 +87,8 @@ Keen.ready(function(){
 
       var $qualityAndReleases = $("#quality-and-releases");
       $.ajax({
-          type: "POST",
+          type: "GET",
           url: "/api/v1/quality-and-releases",
-          data: JSON.stringify({Directive: "list", Params:[start, end]}),
           success: function(data) {
               if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
                   $qualityAndReleases.text("Could not request quality and releases data");
@@ -108,9 +107,8 @@ Keen.ready(function(){
 
       var $otherKey = $("#other-key");
       $.ajax({
-          type: "POST",
+          type: "GET",
           url: "/api/v1/other-key",
-          data: JSON.stringify({Directive: "list", Params:[start, end]}),
           success: function(data) {
               if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
                   $otherKey.text("Could not request quality and releases data");
