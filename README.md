@@ -87,14 +87,14 @@ This is why `showTable` function rendered this data as a table with header line.
 
 Pie is rendered using [keen](https://github.com/keen/dashboards) library.
 If we look in file `static/public/js/index.js` we see the following:
-- When keen is ready:
-```
+### When keen is ready:
+ ```
 Keen.ready(function(){
     // do all job here
  });
 
 ```
-2. Prepare the place for pie:
+### Prepare the place for pie
 ```
   // Expenses (pie)
   var expenses_pie = new Keen.Dataviz()
@@ -105,7 +105,8 @@ Keen.ready(function(){
     .prepare(); 
 ```
 No you can see spinner inside the html element #pie-chart.
-3. Requesting the data: it's just ajax request to the backend server:
+### Requesting the data 
+it's just ajax request to the backend server:
 ```js
         $.ajax({
             type: "GET",
@@ -148,7 +149,7 @@ We get the following response:
 ]
 
 ```
-4. Now render this data in the prepared [keen](https://github.com/keen/dashboards) chart:
+### Now render this data in the prepared [keen](https://github.com/keen/dashboards) chart
 
 ```js
 expenses_pie
