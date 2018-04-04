@@ -87,8 +87,8 @@ This is why `showTable` function rendered this data as a table with header line.
 
 Pie is rendered using [keen](https://github.com/keen/dashboards) library.
 If we look in file `static/public/js/index.js` we see the following:
-1. When keen is ready:
- ```
+- When keen is ready:
+```
 Keen.ready(function(){
     // do all job here
  });
