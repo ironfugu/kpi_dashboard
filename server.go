@@ -105,11 +105,8 @@ func sendResp(w http.ResponseWriter, resp *Response) {
 
 func initCmds(context *Context) {
 	apiFuncs = map[string]*apiFunc{
-		"contribution":         {Handler: contributionHandler, Context: context},
 		"expenses":             {Handler: expensesHandler, Context: context},
-		"commits":              {Handler: commitsHandler, Context: context},
 		"profit":               {Handler: profitHandler, Context: context},
-		"projects":             {Handler: projectsHandler, Context: context},
 		"quality-and-releases": {Handler: qualityAndReleasesHandler, Context: context},
 		"other-key":            {Handler: otherKeyHandler, Context: context},
 	}

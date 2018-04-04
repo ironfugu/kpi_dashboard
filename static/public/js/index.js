@@ -7,7 +7,7 @@ Keen.ready(function(){
     .title('Expenses')
     .prepare();
 
-  // Profit time line by client
+  // Profit
   var profit = new Keen.Dataviz()
     .el('#bar-chart')
     .type('bar')
@@ -18,9 +18,8 @@ Keen.ready(function(){
 
   function showGraphs(start, end){
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "/api/v1/expenses",
-            data: JSON.stringify({Directive: "list", Params:[start, end]}),
             success: function(data) {
                 if (data.hasOwnProperty("reason") || data.hasOwnProperty("code")) {
                     expenses_pie.message("Could not request expenses data");
@@ -103,7 +102,7 @@ Keen.ready(function(){
           dataType: "json",
           error: function(e) {
               console.error(e);
-              expenses_pie.message("Could not request expenses data");
+              alert("Could not request expenses data");
           }
       });
 
