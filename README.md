@@ -1,5 +1,5 @@
 This is KPI readme.
-The app which shows different Key Performance Indicator data on one screen.
+KPI is app which shows different Key Performance Indicator data on one screen.
 ![KPI](readme_images/whole.png)
 
 # Frontend
@@ -89,7 +89,7 @@ Pie is rendered using [keen](https://github.com/keen/dashboards) library.
 If we look in file `static/public/js/index.js` we see the following:
 1. When keen is ready:
  ```
- Keen.ready(function(){
+Keen.ready(function(){
     // do all job here
  });
 
