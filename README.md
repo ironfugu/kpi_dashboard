@@ -1,7 +1,11 @@
 This is KPI readme.
 KPI is app which shows different Key Performance Indicator data on one screen.
 ![KPI](readme_images/whole.png)
-
+# Run
+```
+go get github.com/ypapax/kpi_dashboard && cd $GOPATH/src/github.com/ypapax/kpi_dashboard && ./run.sh
+```
+I0422 08:54:01.661220   16230 server.go:88] listening 0.0.0.0:8081
 # Frontend
 Here I describe how to manage front end content. Let's start with table view:
 ##Table without header

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"bitbucket.org/maxim_yefremov/kpi_dashboard"
+	"github.com/ypapax/kpi_dashboard"
 )
 
 func main() {
