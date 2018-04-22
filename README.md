@@ -8,7 +8,7 @@ go get github.com/ypapax/kpi_dashboard && cd $GOPATH/src/github.com/ypapax/kpi_d
 I0422 08:54:01.661220   16230 server.go:88] listening 0.0.0.0:8081
 # Frontend
 Here I describe how to manage front end content. Let's start with table view:
-##Table without header
+## Table without header
 
 ![Table without header](readme_images/table.png)
 
@@ -49,7 +49,7 @@ is selector `$qualityAndReleases` - the container where to build the table. In t
 ```js
 var $qualityAndReleases = $("#quality-and-releases");
 ```
-##Table with header
+## Table with header
 In similar way we render table with header:
 ![Table with header](readme_images/table_with_header.png)
 
