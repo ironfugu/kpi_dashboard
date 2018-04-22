@@ -323,12 +323,6 @@ Golang is used to serve the frontend. I have simple `run.sh` file for rebuilding
 ./run.sh
 ```
 ```
-+(./run.sh:3):  myMac REPO=/Users/maks/Dropbox/golang/src/bitbucket.org/maxim_yefremov/kpi_dashboard
-+(./run.sh:4):  myMac cd /Users/maks/Dropbox/golang/src/bitbucket.org/maxim_yefremov/kpi_dashboard/apps/kpi_dashboard
-+(./run.sh:5):  myMac go install
-+(./run.sh:6):  myMac cd /Users/maks/Dropbox/golang/src/bitbucket.org/maxim_yefremov/kpi_dashboard
-+(./run.sh:7):  myMac kpi_dashboard -alsologtostderr
-I0404 07:50:42.188197   23916 util.go:125] working directory /Users/maks/Dropbox/golang/src/bitbucket.org/maxim_yefremov/kpi_dashboard
 I0404 07:50:42.190424   23916 server.go:88] listening 0.0.0.0:8081
 ```
 The API functions which are called by frontend js are configured in file server.go:
